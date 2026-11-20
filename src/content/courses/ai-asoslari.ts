@@ -17,7 +17,7 @@ export const aiBasics: Course = {
         {
           type: "text",
           emoji: "👋",
-          title: "Salom! Men Robo",
+          title: "Salom! Men Zukko",
           body: `Men senga **sun'iy intellekt** (inglizcha *Artificial Intelligence*, qisqasi **AI**) haqida hamma narsani o'rgataman.
 
 **Sun'iy intellekt** — bu kompyuterga odatda inson aqli talab qiladigan ishlarni bajarishni o'rgatadigan texnologiya:

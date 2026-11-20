@@ -7,6 +7,8 @@ export type User = {
   role: Role;
   username: string;
   full_name: string;
+  phone: string | null;
+  parent_phone: string | null;
   class_id: string | null;
   avatar: string;
   xp: number;
@@ -21,6 +23,23 @@ export type ClassRow = {
   name: string;
   teacher_id: string;
   created_at: string;
+  /** ISO weekdays the group meets on: 1 = Monday … 7 = Sunday. */
+  days: number[] | null;
+  /** "18:00" */
+  start_time: string | null;
+  duration_min: number | null;
+  room: string | null;
+};
+
+export type AttendanceStatus = "present" | "late" | "absent";
+
+export type AttendanceRow = {
+  class_id: string;
+  user_id: string;
+  date: string;
+  status: AttendanceStatus;
+  xp: number;
+  marked_at: string;
 };
 
 export type ProgressRow = {
@@ -36,7 +55,7 @@ export type ProgressRow = {
 
 /** Columns that are safe to load into pages (everything except password_hash). */
 export const USER_COLUMNS =
-  "id, role, username, full_name, class_id, avatar, xp, streak, best_streak, last_active, created_at";
+  "id, role, username, full_name, phone, parent_phone, class_id, avatar, xp, streak, best_streak, last_active, created_at";
 
 export function isConfigured() {
   return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);

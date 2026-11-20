@@ -34,17 +34,17 @@ export function ClassifyStep({ step, onAnswer }: { step: ClassifyStepType; onAns
 
   return (
     <div className="animate-pop">
-      <div className="mb-2 text-sm font-extrabold uppercase tracking-wider text-violet-500">Saralash</div>
-      <h2 className="mb-6 text-2xl font-black text-slate-900">{step.question}</h2>
+      <div className="mb-2 eyebrow !text-primary-text">Saralash</div>
+      <h2 className="mb-6 text-2xl font-semibold text-zinc-900">{step.question}</h2>
 
       {!done && (
         <div className="mb-6">
-          <div className="mb-2 text-center text-sm font-bold text-slate-400">
+          <div className="mb-2 text-center text-sm font-bold text-zinc-400">
             {position + 1} / {order.length}
           </div>
           <div
             key={current}
-            className={`card animate-pop px-6 py-8 text-center text-xl font-extrabold ${
+            className={`card animate-pop px-6 py-8 text-center text-xl font-semibold ${
               flash ? (flash.ok ? "border-emerald-300 bg-emerald-50" : "animate-shake border-rose-300 bg-rose-50") : ""
             }`}
           >
@@ -65,7 +65,7 @@ export function ClassifyStep({ step, onAnswer }: { step: ClassifyStepType; onAns
               type="button"
               onClick={() => choose(bucket.id)}
               disabled={done}
-              className={`btn btn-ghost flex-col py-4 disabled:opacity-100 ${
+              className={`btn btn-outline h-auto flex-col py-4 disabled:opacity-100 ${
                 flash?.bucket === bucket.id
                   ? flash.ok
                     ? "!border-emerald-400 !bg-emerald-50"

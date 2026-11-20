@@ -25,9 +25,9 @@ export function OrderStep({ step, onAnswer }: { step: OrderStepType; onAnswer: (
 
   return (
     <div className="animate-pop">
-      <div className="mb-2 text-sm font-extrabold uppercase tracking-wider text-violet-500">Tartibla</div>
-      <h2 className="mb-2 text-2xl font-black text-slate-900">{step.question}</h2>
-      <p className="mb-6 text-slate-500">Bandlarni to'g'ri tartibda bos. Xato qo'ysang — ustiga bosib qaytar.</p>
+      <div className="mb-2 eyebrow !text-primary-text">Tartibla</div>
+      <h2 className="mb-2 text-2xl font-semibold text-zinc-900">{step.question}</h2>
+      <p className="mb-6 text-zinc-500">Bandlarni to'g'ri tartibda bos. Xato qo'ysang — ustiga bosib qaytar.</p>
 
       <ol className="mb-6 space-y-2">
         {step.items.map((_, slot) => {
@@ -41,9 +41,9 @@ export function OrderStep({ step, onAnswer }: { step: OrderStepType; onAnswer: (
               : "";
           return (
             <li key={slot} className="flex items-center gap-3">
-              <span className="w-6 shrink-0 text-right text-lg font-black text-slate-300">{slot + 1}</span>
+              <span className="w-6 shrink-0 text-right text-lg font-semibold text-zinc-300">{slot + 1}</span>
               {item === undefined ? (
-                <div className="h-[52px] w-full rounded-2xl border-2 border-dashed border-slate-200" />
+                <div className="h-[52px] w-full rounded-xl border border-dashed border-zinc-200" />
               ) : (
                 <button type="button" onClick={() => remove(item)} className={`choice ${state}`}>
                   {step.items[item]}
@@ -67,8 +67,8 @@ export function OrderStep({ step, onAnswer }: { step: OrderStepType; onAnswer: (
       )}
 
       {checked && !isCorrect && (
-        <div className="rounded-2xl bg-emerald-50 p-4">
-          <div className="mb-2 font-extrabold text-emerald-700">To'g'ri tartib:</div>
+        <div className="rounded-xl bg-emerald-50 p-4">
+          <div className="mb-2 font-semibold text-emerald-700">To'g'ri tartib:</div>
           <ol className="list-decimal space-y-1 pl-6 text-emerald-900">
             {step.items.map((item) => (
               <li key={item}>{item}</li>
@@ -82,7 +82,7 @@ export function OrderStep({ step, onAnswer }: { step: OrderStepType; onAnswer: (
           type="button"
           onClick={check}
           disabled={answer.length !== step.items.length}
-          className="btn btn-primary mt-6 w-full"
+          className="btn btn-primary btn-lg mt-6 w-full"
         >
           Tekshirish
         </button>

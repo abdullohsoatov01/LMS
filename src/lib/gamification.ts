@@ -3,6 +3,9 @@ import { COURSES } from "@/content";
 export const XP_PER_CORRECT = 10;
 export const XP_LESSON_BONUS = 20;
 
+/** XP for showing up to a live lesson in class. */
+export const ATTENDANCE_XP = { present: 15, late: 5, absent: 0 } as const;
+
 export function lessonXp(score: number) {
   return score * XP_PER_CORRECT + XP_LESSON_BONUS;
 }

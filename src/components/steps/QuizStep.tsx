@@ -32,10 +32,10 @@ export function QuizStep({ step, onAnswer }: { step: QuizStepType; onAnswer: (co
 
   return (
     <div className="animate-pop">
-      <div className="mb-2 text-sm font-extrabold uppercase tracking-wider text-violet-500">
+      <div className="mb-2 eyebrow !text-primary-text">
         {multi ? "Bir nechta javobni tanla" : "Savol"}
       </div>
-      <h2 className="mb-6 text-2xl font-black text-slate-900">{step.question}</h2>
+      <h2 className="mb-6 text-2xl font-semibold text-zinc-900">{step.question}</h2>
       <div className="space-y-3">
         {step.options.map((option, i) => (
           <button
@@ -45,9 +45,9 @@ export function QuizStep({ step, onAnswer }: { step: QuizStepType; onAnswer: (co
             className={`choice flex items-center gap-3 ${optionClass(i)}`}
           >
             <span
-              className={`flex h-8 w-8 shrink-0 items-center justify-center border-2 text-sm font-black ${
+              className={`flex h-8 w-8 shrink-0 items-center justify-center border text-sm font-semibold ${
                 multi ? "rounded-lg" : "rounded-full"
-              } ${selected.includes(i) ? "border-current" : "border-slate-200 text-slate-400"}`}
+              } ${selected.includes(i) ? "border-current" : "border-zinc-200 text-zinc-400"}`}
             >
               {multi && selected.includes(i) ? "✓" : LETTERS[i]}
             </span>
@@ -56,7 +56,7 @@ export function QuizStep({ step, onAnswer }: { step: QuizStepType; onAnswer: (co
         ))}
       </div>
       {!checked && (
-        <button type="button" onClick={check} disabled={selected.length === 0} className="btn btn-primary mt-6 w-full">
+        <button type="button" onClick={check} disabled={selected.length === 0} className="btn btn-primary btn-lg mt-6 w-full">
           Tekshirish
         </button>
       )}

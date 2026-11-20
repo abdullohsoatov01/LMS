@@ -6,6 +6,7 @@ import { python } from "@codemirror/lang-python";
 import type { CodeStep as CodeStepType } from "@/content/types";
 import { getPythonStatus, loadPython, onPythonStatus, runPython, type RunResult } from "@/lib/python";
 import { Markdown } from "../Markdown";
+import { Mascot } from "../Mascot";
 
 const extensions = [python()];
 
@@ -53,16 +54,16 @@ export function CodeStep({ step, onAnswer }: { step: CodeStepType; onAnswer: (co
 
   return (
     <div className="animate-pop">
-      <div className="mb-2 text-sm font-extrabold uppercase tracking-wider text-violet-500">🐍 Kod topshirig'i</div>
-      <h2 className="mb-4 text-2xl font-black text-slate-900">{step.title}</h2>
+      <div className="mb-2 eyebrow !text-primary-text">🐍 Kod topshirig'i</div>
+      <h2 className="mb-4 text-2xl font-semibold text-zinc-900">{step.title}</h2>
       <Markdown className="mb-5 !text-base">{step.task}</Markdown>
 
-      <div className="overflow-hidden rounded-2xl border-2 border-slate-800 bg-[#282c34] shadow-lg">
+      <div className="overflow-hidden rounded-xl border border-[#1f2329] bg-[#282c34] shadow-lg">
         <div className="flex items-center gap-1.5 border-b border-white/10 px-4 py-2">
-          <span className="h-3 w-3 rounded-full bg-rose-400" />
+          <span className="h-3 w-3 rounded-full bg-[#fb7185]" />
           <span className="h-3 w-3 rounded-full bg-amber-400" />
-          <span className="h-3 w-3 rounded-full bg-emerald-400" />
-          <span className="ml-2 font-mono text-xs text-slate-400">main.py</span>
+          <span className="h-3 w-3 rounded-full bg-[#34d399]" />
+          <span className="ml-2 font-mono text-xs text-[#a1a1aa]">main.py</span>
         </div>
         <CodeMirror
           value={code}
@@ -81,7 +82,7 @@ export function CodeStep({ step, onAnswer }: { step: CodeStepType; onAnswer: (co
             {loading ? "⏳ Python yuklanmoqda..." : running ? "⏳ Ishlamoqda..." : "▶ Ishga tushirish"}
           </button>
           {step.hint && !showHint && (
-            <button type="button" onClick={() => setShowHint(true)} className="btn btn-ghost">
+            <button type="button" onClick={() => setShowHint(true)} className="btn btn-outline">
               💡 Maslahat
             </button>
           )}
@@ -91,12 +92,12 @@ export function CodeStep({ step, onAnswer }: { step: CodeStepType; onAnswer: (co
               setCode(revealed ? step.solution : step.starter);
               setResult(null);
             }}
-            className="btn btn-ghost"
+            className="btn btn-outline"
           >
             ↺ Qaytadan
           </button>
           {failures >= 2 && !revealed && (
-            <button type="button" onClick={reveal} className="btn btn-ghost text-amber-600">
+            <button type="button" onClick={reveal} className="btn btn-outline text-amber-600">
               👀 Yechimni ko'rish
             </button>
           )}
@@ -104,29 +105,30 @@ export function CodeStep({ step, onAnswer }: { step: CodeStepType; onAnswer: (co
       )}
 
       {showHint && step.hint && !passed && (
-        <div className="mt-4 animate-pop rounded-2xl bg-amber-50 px-4 py-3 font-semibold text-amber-900">
-          💡 {step.hint}
+        <div className="mt-4 flex animate-pop items-center gap-3 rounded-xl bg-amber-50 px-4 py-3 font-semibold text-amber-900">
+          <Mascot pose="head" face="think" className="w-12" />
+          <span>{step.hint}</span>
         </div>
       )}
 
       {revealed && !passed && (
-        <div className="mt-4 rounded-2xl bg-sky-50 px-4 py-3 font-semibold text-sky-900">
+        <div className="mt-4 rounded-xl bg-sky-50 px-4 py-3 font-semibold text-sky-900">
           Yechim muharrirga qo'yildi. Uni diqqat bilan o'qib chiq, nima o'zgarganini top va ishga tushir.
         </div>
       )}
 
       {result && (
-        <div className="mt-4 animate-pop overflow-hidden rounded-2xl border-2 border-slate-800 bg-slate-900 font-mono text-sm">
-          <div className="border-b border-white/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-400">
+        <div className="mt-4 animate-pop overflow-hidden rounded-xl border border-[#27272a] bg-[#18181b] font-mono text-sm">
+          <div className="border-b border-white/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#a1a1aa]">
             Natija
           </div>
-          {result.output && <pre className="whitespace-pre-wrap px-4 py-3 text-slate-100">{result.output}</pre>}
+          {result.output && <pre className="whitespace-pre-wrap px-4 py-3 text-[#f4f4f5]">{result.output}</pre>}
           {result.error ? (
-            <div className="whitespace-pre-wrap bg-rose-500/15 px-4 py-3 font-sans text-base font-bold text-rose-300">
+            <div className="whitespace-pre-wrap bg-rose-500/15 px-4 py-3 font-sans text-base font-bold text-[#fda4af]">
               ❌ {result.error}
             </div>
           ) : (
-            <div className="bg-emerald-500/15 px-4 py-3 font-sans text-base font-bold text-emerald-300">
+            <div className="bg-emerald-500/15 px-4 py-3 font-sans text-base font-bold text-[#6ee7b7]">
               ✅ Barcha tekshiruvlardan o'tdi!
             </div>
           )}

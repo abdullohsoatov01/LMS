@@ -22,8 +22,8 @@ export function AvatarPicker({ current }: { current: string }) {
           key={a}
           type="button"
           onClick={() => pick(a)}
-          className={`flex aspect-square items-center justify-center rounded-2xl text-3xl transition hover:scale-110 ${
-            a === avatar ? "bg-violet-100 ring-4 ring-violet-400" : "bg-slate-50"
+          className={`flex aspect-square items-center justify-center rounded-lg border text-2xl transition hover:bg-zinc-50 ${
+            a === avatar ? "border-primary bg-primary-soft ring-2 ring-primary-ring" : "border-zinc-200 bg-surface"
           }`}
         >
           {a}

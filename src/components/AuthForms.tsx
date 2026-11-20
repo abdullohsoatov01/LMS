@@ -1,12 +1,43 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { login, registerTeacher } from "@/app/login/actions";
+
+function PasswordInput({ id, minLength, autoComplete }: { id: string; minLength?: number; autoComplete?: string }) {
+  const [visible, setVisible] = useState(false);
+  return (
+    <div className="relative">
+      <input
+        id={id}
+        name={id}
+        type={visible ? "text" : "password"}
+        className="input pr-10"
+        minLength={minLength}
+        autoComplete={autoComplete}
+        required
+      />
+      <button
+        type="button"
+        onClick={() => setVisible((v) => !v)}
+        className="absolute inset-y-0 right-0 flex w-10 items-center justify-center text-zinc-500 hover:text-zinc-900"
+        aria-label={visible ? "Parolni yashirish" : "Parolni ko'rsatish"}
+      >
+        {visible ? <EyeOff size={16} /> : <Eye size={16} />}
+      </button>
+    </div>
+  );
+}
+
+function ErrorText({ error }: { error?: string }) {
+  if (!error) return null;
+  return <p className="animate-shake rounded-lg bg-rose-50 px-3 py-2 text-sm font-medium text-rose-600">{error}</p>;
+}
 
 export function LoginForm() {
   const [state, action, pending] = useActionState(login, undefined);
   return (
-    <form action={action} className="space-y-4">
+    <form action={action} className="space-y-4 text-left">
       <div>
         <label className="label" htmlFor="username">
           Login
@@ -25,11 +56,11 @@ export function LoginForm() {
         <label className="label" htmlFor="password">
           Parol
         </label>
-        <input id="password" name="password" type="password" className="input" autoComplete="current-password" required />
+        <PasswordInput id="password" autoComplete="current-password" />
       </div>
-      {state?.error && <p className="animate-shake rounded-xl bg-rose-50 px-4 py-2 font-bold text-rose-600">{state.error}</p>}
+      <ErrorText error={state?.error} />
       <button type="submit" disabled={pending} className="btn btn-primary w-full">
-        {pending ? "Kirilmoqda..." : "Kirish 🚀"}
+        {pending ? "Kirilmoqda..." : "Kirish"}
       </button>
     </form>
   );
@@ -38,7 +69,7 @@ export function LoginForm() {
 export function TeacherSignupForm() {
   const [state, action, pending] = useActionState(registerTeacher, undefined);
   return (
-    <form action={action} className="space-y-4">
+    <form action={action} className="space-y-4 text-left">
       <div>
         <label className="label" htmlFor="full_name">
           Ism-familiya
@@ -63,18 +94,18 @@ export function TeacherSignupForm() {
         <label className="label" htmlFor="password">
           Parol (kamida 8 belgi)
         </label>
-        <input id="password" name="password" type="password" className="input" minLength={8} required />
+        <PasswordInput id="password" minLength={8} autoComplete="new-password" />
       </div>
       <div>
         <label className="label" htmlFor="code">
           Maxfiy kod
         </label>
-        <input id="code" name="code" type="password" className="input" required />
-        <p className="mt-1 text-xs font-semibold text-slate-400">Saytni o'rnatgan administrator beradi.</p>
+        <PasswordInput id="code" />
+        <p className="mt-1.5 text-xs text-zinc-500">Saytni o'rnatgan administrator beradi.</p>
       </div>
-      {state?.error && <p className="animate-shake rounded-xl bg-rose-50 px-4 py-2 font-bold text-rose-600">{state.error}</p>}
+      <ErrorText error={state?.error} />
       <button type="submit" disabled={pending} className="btn btn-primary w-full">
-        {pending ? "Yaratilmoqda..." : "O'qituvchi hisobini yaratish"}
+        {pending ? "Yaratilmoqda..." : "Hisob yaratish"}
       </button>
     </form>
   );

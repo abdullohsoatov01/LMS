@@ -1,6 +1,6 @@
 import type { Course } from "@/content/types";
 import { maxScore } from "@/content";
-import { db, USER_COLUMNS, type ProgressRow, type User } from "./db";
+import { db, USER_COLUMNS, type AttendanceRow, type ClassRow, type ProgressRow, type User } from "./db";
 
 export async function getProgress(userId: string) {
   const { data } = await db().from("lesson_progress").select("*").eq("user_id", userId);
@@ -21,6 +21,16 @@ export async function getClassmates(classId: string) {
     .order("xp", { ascending: false })
     .order("full_name");
   return (data ?? []) as User[];
+}
+
+export async function getGroup(classId: string) {
+  const { data } = await db().from("classes").select("*").eq("id", classId).maybeSingle();
+  return (data ?? null) as ClassRow | null;
+}
+
+export async function getAttendance(userId: string) {
+  const { data } = await db().from("attendance").select("*").eq("user_id", userId).order("date", { ascending: false });
+  return (data ?? []) as AttendanceRow[];
 }
 
 export function progressKey(courseId: string, lessonId: string) {

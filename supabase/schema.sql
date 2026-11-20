@@ -30,6 +30,10 @@ do $$ begin
 exception when duplicate_object then null;
 end $$;
 
+-- Телефоны (необязательные). Добавлены позже: если база уже создана, выполните только эти две строки.
+alter table public.users add column if not exists phone text;
+alter table public.users add column if not exists parent_phone text;
+
 create index if not exists users_class_idx on public.users (class_id);
 
 create table if not exists public.lesson_progress (
@@ -57,3 +61,21 @@ alter table public.users enable row level security;
 alter table public.classes enable row level security;
 alter table public.lesson_progress enable row level security;
 alter table public.achievements enable row level security;
+
+-- Расписание групп и посещаемость (добавлено позже: если база уже создана, выполните этот блок).
+alter table public.classes add column if not exists days smallint[] not null default '{}';
+alter table public.classes add column if not exists start_time text;
+alter table public.classes add column if not exists duration_min integer not null default 90;
+alter table public.classes add column if not exists room text;
+
+create table if not exists public.attendance (
+  class_id uuid not null references public.classes (id) on delete cascade,
+  user_id uuid not null references public.users (id) on delete cascade,
+  date date not null,
+  status text not null check (status in ('present', 'late', 'absent')),
+  xp integer not null default 0,
+  marked_at timestamptz not null default now(),
+  primary key (user_id, date)
+);
+create index if not exists attendance_class_idx on public.attendance (class_id, date);
+alter table public.attendance enable row level security;
